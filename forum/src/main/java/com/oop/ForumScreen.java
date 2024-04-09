@@ -5,11 +5,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ForumFrame extends JFrame {
+public class ForumScreen extends JFrame {
     private JTextArea chatArea;
     private JTextField messageField;
 
-    public ForumFrame() {
+    public ForumScreen() {
         setTitle("Simple Forum");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 400);
