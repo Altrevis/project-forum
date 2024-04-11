@@ -12,3 +12,8 @@ objectif:
 -faire un forum en full java:
 
 -système login/mot de passe:
+
+
+Lien qui nous ont aidés:
+
+https://www.guru99.com/java-swing-gui.html (affichage de l'application)
