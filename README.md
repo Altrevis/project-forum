@@ -22,6 +22,7 @@ https://www.youtube.com/watch?v=Hiv3gwJC5kw (système login/password)
 
 
 Installation MySQL (Alexandre)
+
 sudo apt-get install mysql-server
 
 sudo mysql_secure_installation
