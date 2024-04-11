@@ -12,7 +12,7 @@ public class ForumScreen extends JFrame {
     public ForumScreen() {
         setTitle("Simple Forum");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 400);
+        setSize(600, 400);
         setLayout(new BorderLayout());
 
         JMenuBar menuBar = new JMenuBar();
