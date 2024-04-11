@@ -9,7 +9,7 @@ public class ForumScreen extends JFrame {
     private JTextArea chatArea;
     private JTextField messageField;
 
-    public ForumScreen() {
+    public ForumScreen(String userID) {
         setTitle("Simple Forum");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
@@ -53,7 +53,7 @@ public class ForumScreen extends JFrame {
         public void actionPerformed(ActionEvent e) {
             String message = messageField.getText();
             if (!message.isEmpty()) {
-                chatArea.append("You: " + message + "\n");
+                chatArea.append("You:" + message + "\n");
                 messageField.setText("");
             }
         }

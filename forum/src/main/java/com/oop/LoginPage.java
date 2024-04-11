@@ -1,5 +1,6 @@
 package com.oop;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,9 +38,11 @@ public class LoginPage implements ActionListener{
         userPasswordField.setBounds(125,150,200,25);
 
         loginButton.setBounds(125,200,100,25);
+        loginButton.setFocusable(false);
         loginButton.addActionListener(this);
 
         resetButton.setBounds(225,200,100,25);
+        resetButton.setFocusable(false);
         resetButton.addActionListener(this);
 
         frame.add(userIDLabel);
@@ -57,5 +60,29 @@ public class LoginPage implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==resetButton) {
+            userIDField.setText("");
+            userPasswordField.setText("");
+        }
+        if(e.getSource()==loginButton) {
+            String userID = userIDField.getText();
+            String password = String.valueOf(userPasswordField.getPassword());
+            if(logininfo.containsKey(userID)) {
+                if(logininfo.get(userID).equals(password)) {
+                    messageLabel.setForeground(Color.green);
+                    messageLabel.setText("Login succesful");
+                    @SuppressWarnings("unused")
+                    ForumScreen forumScreen = new ForumScreen(password);
+                }
+                else {
+                    messageLabel.setForeground(Color.red);
+                    messageLabel.setText("Wrong password");
+                }
+            }
+            else {
+                messageLabel.setForeground(Color.red);
+                messageLabel.setText("username not found");
+            }
+        }
     }
 }
