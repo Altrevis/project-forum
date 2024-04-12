@@ -48,6 +48,10 @@ public class ForumScreen extends JFrame {
         setVisible(true);
     }
 
+    public ForumScreen() {
+        //TODO Auto-generated constructor stub
+    }
+
     private class SendButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
