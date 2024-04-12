@@ -27,7 +27,6 @@ sudo apt-get install mysql-server
 
 sudo mysql_secure_installation
 
-
     1. setup VALIDATE PASSWORD plugin.  
        select no.
     2. Set the password for the root MySql account.
