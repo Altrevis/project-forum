@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -16,19 +17,20 @@ public class LoginPage implements ActionListener {
     JFrame frame = new JFrame();
     JButton loginButton = new JButton("Login");
     JButton resetButton = new JButton("Reset");
-
     JTextField userIDField = new JTextField();
     JPasswordField userPasswordField = new JPasswordField();
 
-    JLabel userIDLabel = new JLabel("UserID");
-    JLabel userPasswordLabel = new JLabel("Password:");
+    JLabel userIDLabel = new JLabel("userID");
+    JLabel userPasswordLabel = new JLabel("password:");
     JLabel messageLabel = new JLabel("");
 
-    HashMap<String, String> logininfo = new HashMap<String, String>();
-    private String userID;
+    HashMap<String, String> logininfo;
+    Socket clientSocket;
 
-    LoginPage(HashMap<String, String> loginInfoOriginal) {
+    LoginPage(HashMap<String, String> loginInfoOriginal, Socket clientSocket) {
         logininfo = loginInfoOriginal;
+        this.clientSocket = clientSocket;
+
         userIDLabel.setBounds(50, 100, 75, 25);
         userPasswordLabel.setBounds(50, 150, 75, 25);
 
@@ -66,22 +68,20 @@ public class LoginPage implements ActionListener {
             userPasswordField.setText("");
         }
         if (e.getSource() == loginButton) {
-            userID = userIDField.getText();
+            String userID = userIDField.getText();
             String password = String.valueOf(userPasswordField.getPassword());
             if (logininfo.containsKey(userID)) {
                 if (logininfo.get(userID).equals(password)) {
                     messageLabel.setForeground(Color.green);
                     messageLabel.setText("Login successful");
-                    CreateDB.saveUserID(userID); // save userID in db_forum
-                    new ForumScreen(userID);
-                    frame.dispose();
-                } else {
+                }
+                else {
                     messageLabel.setForeground(Color.red);
                     messageLabel.setText("Wrong password");
                 }
             } else {
                 messageLabel.setForeground(Color.red);
-                messageLabel.setText("Username not found");
+                messageLabel.setText("Wrong Username");
             }
         }
     }
