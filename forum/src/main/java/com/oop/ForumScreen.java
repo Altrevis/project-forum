@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 public class ForumScreen extends JFrame {
     private JTextArea chatArea;
     private JTextField messageField;
+    private String userID;
 
     public ForumScreen(String userID) {
+        this.userID = userID;
         setTitle("Simple Forum");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
@@ -48,16 +50,12 @@ public class ForumScreen extends JFrame {
         setVisible(true);
     }
 
-    public ForumScreen() {
-        //TODO Auto-generated constructor stub
-    }
-
     private class SendButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             String message = messageField.getText();
             if (!message.isEmpty()) {
-                chatArea.append("You:" + message + "\n");
+                chatArea.append(userID + ": " + message + "\n");
                 messageField.setText("");
             }
         }
@@ -69,5 +67,4 @@ public class ForumScreen extends JFrame {
             messageField.setText("");
         }
     }
-    
 }

@@ -16,7 +16,6 @@ public class LoginPage implements ActionListener{
     JFrame frame = new JFrame();
     JButton loginButton = new JButton("Login");
     JButton resetButton = new JButton("Reset");
-
     JTextField userIDField = new JTextField();
     JPasswordField userPasswordField = new JPasswordField();
 
@@ -56,7 +55,7 @@ public class LoginPage implements ActionListener{
         frame.setSize(420,420);
         frame.setLayout(null);
         frame.setVisible(true);
-
+        
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -71,7 +70,7 @@ public class LoginPage implements ActionListener{
                 if(logininfo.get(userID).equals(password)) {
                     messageLabel.setForeground(Color.green);
                     messageLabel.setText("Login succesful");
-                    new ForumScreen();
+                    new ForumScreen(userID);
                 }
                 else {
                     messageLabel.setForeground(Color.red);
