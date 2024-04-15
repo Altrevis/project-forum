@@ -1,4 +1,4 @@
-package com.oop;
+package com.forum;
 
 import java.io.BufferedReader;
 import java.io.IOException;

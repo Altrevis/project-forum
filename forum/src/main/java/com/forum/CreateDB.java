@@ -1,4 +1,4 @@
-package com.oop;
+package com.forum;
 import java.sql.*;
 
 public class CreateDB {

@@ -1,4 +1,4 @@
-package com.oop;
+package com.forum;
 
 import javax.swing.*;
 import java.awt.*;
