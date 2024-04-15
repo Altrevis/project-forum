@@ -74,7 +74,7 @@ public class LoginPage implements ActionListener {
                 if (logininfo.get(userID).equals(password)) {
                     messageLabel.setForeground(Color.green);
                     messageLabel.setText("Login successful");
-                    ForumScreen forumScreen = new ForumScreen(password);
+                    new ForumScreen(password);
                 }
                 else {
                     messageLabel.setForeground(Color.red);

@@ -12,11 +12,13 @@ public class Server {
             serverSocket = new ServerSocket(12345);
             System.out.println("Server started. Waiting for clients...");
             
+            IDandPassword idAndPassword = new IDandPassword();
+            
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client connected: " + clientSocket);
                 
-                launchLoginPage(clientSocket);
+                launchLoginPage(idAndPassword.getLoginInfo(), clientSocket);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -31,10 +33,7 @@ public class Server {
         }
     }
     
-    private static void launchLoginPage(Socket clientSocket) {
-        HashMap<String, String> loginInfo = new HashMap<>();
+    private static void launchLoginPage(HashMap<String, String> loginInfo, Socket clientSocket) {
         new LoginPage(loginInfo, clientSocket);
     }
 }
-
-
