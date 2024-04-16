@@ -4,19 +4,26 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import javax.swing.SwingUtilities;
+
 public class Server {
     private static List<ClientHandler> clients = new ArrayList<>();
 
     public static void main(String[] args) {
-        int port = 8000;
+        int port = 12345;
 
         try {
-            ServerSocket serverSocket = new ServerSocket(port);
+            String serverAddress = "192.168.39.111"; 
+            @SuppressWarnings("resource")
+            ServerSocket serverSocket = new ServerSocket(port, 0, InetAddress.getByName(serverAddress));
             System.out.println("Server started on port " + port);
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client connected: " + clientSocket.getInetAddress());
+
+                // Launch LoginPage when a client connects
+                SwingUtilities.invokeLater(() -> new LoginPage(new HashMap<>(), clientSocket));
 
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
                 clients.add(clientHandler);
