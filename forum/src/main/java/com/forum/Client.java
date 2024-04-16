@@ -1,43 +1,29 @@
 package com.forum;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
+import java.io.*;
+import java.net.*;
+import java.util.Scanner;
 
 public class Client {
-    public static void main(String[] args) {
-        Socket socket = null;
-        PrintWriter out = null;
-        BufferedReader in = null;
-        
-        try {
-            socket = new Socket("localhost", 12345);
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String serverMessage = in.readLine();
-            System.out.println("Server says: " + serverMessage);
-            launchLoginPage();
-            while (true) {
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (out != null)
-                    out.close();
-                if (in != null)
-                    in.close();
-                if (socket != null)
-                    socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    private static void launchLoginPage() {
+    @SuppressWarnings("resource")
+    public static void main(String[] args) throws IOException {
+        String serverAddress = "127.0.0.1"; // Adresse IP du serveur
+        int port = 8000; // Port du serveur
+
+        // Connexion au serveur
+        Socket socket = new Socket(serverAddress, port);
+        System.out.println("Connecté au serveur");
+
+        // Initialisation des flux de lecture et d'écriture
+        final PrintWriter[] writer = new PrintWriter[1];
+        writer[0] = new PrintWriter(socket.getOutputStream(), true);
+        final BufferedReader[] reader = new BufferedReader[1];
+        reader[0] = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        final Scanner[] scanner = new Scanner[1];
+        scanner[0] = new Scanner(System.in);
+
+        // Fermer la connexion
+        socket.close();
     }
 }
 
