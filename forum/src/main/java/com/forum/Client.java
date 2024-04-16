@@ -2,29 +2,31 @@ package com.forum;
 
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
 
 public class Client {
-    @SuppressWarnings("resource")
-    public static void main(String[] args) throws IOException {
-        String serverAddress = "127.0.0.1"; // Adresse IP du serveur
-        int port = 8000; // Port du serveur
+    public static void main(String[] args) {
+        String serverAddress = "192.168.39.111"; // Remplacez par l'adresse IP du serveur
+        int port = 8000;
 
-        // Connexion au serveur
-        Socket socket = new Socket(serverAddress, port);
-        System.out.println("Connecté au serveur");
+        try {
+            Socket socket = new Socket(serverAddress, port);
+            System.out.println("Connecté au serveur");
 
-        // Initialisation des flux de lecture et d'écriture
-        final PrintWriter[] writer = new PrintWriter[1];
-        writer[0] = new PrintWriter(socket.getOutputStream(), true);
-        final BufferedReader[] reader = new BufferedReader[1];
-        reader[0] = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        final Scanner[] scanner = new Scanner[1];
-        scanner[0] = new Scanner(System.in);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
-        // Fermer la connexion
-        socket.close();
+            // Envoyer un message au serveur
+            out.println("Bonjour depuis le client");
+
+            // Lire la réponse du serveur
+            String response = in.readLine();
+            System.out.println("Réponse du serveur : " + response);
+
+            // Fermer la connexion
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
-
-
