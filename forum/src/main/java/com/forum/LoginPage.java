@@ -28,7 +28,8 @@ public class LoginPage implements ActionListener {
     Socket clientSocket;
 
     LoginPage(HashMap<String, String> loginInfoOriginal, Socket clientSocket) {
-        logininfo = loginInfoOriginal;
+        IDandPassword idandpassword = new IDandPassword();
+        logininfo = idandpassword.getLoginInfo();
         this.clientSocket = clientSocket;
 
         userIDLabel.setBounds(50, 100, 75, 25);

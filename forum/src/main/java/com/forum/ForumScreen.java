@@ -16,7 +16,7 @@ public class ForumScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLayout(new BorderLayout());
-
+        
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
         JMenuItem openItem = new JMenuItem("Open");
