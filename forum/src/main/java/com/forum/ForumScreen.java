@@ -12,40 +12,42 @@ public class ForumScreen extends JFrame {
 
     public ForumScreen(String userID) {
         this.userID = userID;
-        setTitle("Accueil");
+        setTitle("Simple Forum");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLayout(new BorderLayout());
-        
+
         JMenuBar menuBar = new JMenuBar();
         JButton createThreadButton = new JButton("Créer un fil");
         JButton joinThreadButton = new JButton("Rejoindre un fil");
-        
+         // Intégration du code de la classe Text
+         String textToDisplay = "Bienvenue sur le forum";
+         JLabel label = new JLabel(textToDisplay);
+         label.setBounds(200, 20, 300, 50);
+         add(label, BorderLayout.CENTER); // Utilisation du BorderLayout.CENTER pour afficher le texte au centre
+
+
         createThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Ouvrir la fenêtre pour créer un fil (ForumScreen2)
-                dispose();
                 new ForumScreen2(userID);
             }
         });
-        
+
         joinThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Ouvrir la fenêtre pour rejoindre un fil (ForumScreen3)
-                dispose();
                 new ForumScreen3(userID);
             }
         });
-        
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(createThreadButton);
         buttonPanel.add(joinThreadButton);
-        
+
         add(buttonPanel, BorderLayout.NORTH);
-        menuBar.add(createThreadButton);
-        menuBar.add(joinThreadButton);
 
         JPanel messagePanel = new JPanel();
         JLabel messageLabel = new JLabel("Enter Message: ");
@@ -65,12 +67,10 @@ public class ForumScreen extends JFrame {
         chatArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(chatArea);
 
-        add(menuBar, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER); // Déplacer le chatArea vers le centre
         add(messagePanel, BorderLayout.SOUTH);
 
         setVisible(true);
-        setLocationRelativeTo(null);
     }
 
     private class SendButtonListener implements ActionListener {
