@@ -5,12 +5,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ForumScreen extends JFrame {
+public class ForumScreen2 extends JFrame {
     private JTextArea chatArea;
     private JTextField messageField;
     private String userID;
 
-    public ForumScreen(String userID) {
+    public ForumScreen2(String userID) {
         this.userID = userID;
         setTitle("Simple Forum");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -18,14 +18,14 @@ public class ForumScreen extends JFrame {
         setLayout(new BorderLayout());
         
         JMenuBar menuBar = new JMenuBar();
-        JButton createThreadButton = new JButton("Créer un fil");
+        JButton createThreadButton = new JButton("Accueil");
         JButton joinThreadButton = new JButton("Rejoindre un fil");
         
         createThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Ouvrir la fenêtre pour créer un fil (ForumScreen2)
-                new ForumScreen2(userID);
+                new ForumScreen(userID);
             }
         });
         
@@ -40,7 +40,7 @@ public class ForumScreen extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(createThreadButton);
         buttonPanel.add(joinThreadButton);
-        
+
         add(buttonPanel, BorderLayout.NORTH);
         menuBar.add(createThreadButton);
         menuBar.add(joinThreadButton);
