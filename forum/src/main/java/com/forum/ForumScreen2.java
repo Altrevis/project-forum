@@ -6,8 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ForumScreen2 extends JFrame {
-    private JTextArea chatArea;
-    private JTextField messageField;
+    private JTextArea descriptionArea;
+    private JTextField titleField;
     private String userID;
 
     public ForumScreen2(String userID) {
@@ -16,62 +16,66 @@ public class ForumScreen2 extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLayout(new BorderLayout());
-        
-        JMenuBar menuBar = new JMenuBar();
+
+        JPanel buttonPanel = new JPanel();
         JButton createThreadButton = new JButton("Accueil");
         JButton joinThreadButton = new JButton("Rejoindre un fil");
-        
+
         createThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Ouvrir la fenêtre pour créer un fil (ForumScreen2)
                 dispose();
                 new ForumScreen(userID);
             }
         });
-        
+
         joinThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Ouvrir la fenêtre pour rejoindre un fil (ForumScreen3)
                 dispose();
                 new ForumScreen3(userID);
             }
         });
-        
-        JPanel buttonPanel = new JPanel();
+
         buttonPanel.add(createThreadButton);
         buttonPanel.add(joinThreadButton);
 
         add(buttonPanel, BorderLayout.NORTH);
-        menuBar.add(createThreadButton);
-        menuBar.add(joinThreadButton);
 
-        JPanel messagePanel = new JPanel();
+        JPanel inputPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
         JLabel titleLabel = new JLabel("Titre: ");
-        JLabel messageLabel = new JLabel("Enter Message: ");
-        JTextField titleField = new JTextField(10);
-        messageField = new JTextField(10);
+        inputPanel.add(titleLabel, gbc);
+
+        gbc.gridy++;
+        titleField = new JTextField(30);
+        inputPanel.add(titleField, gbc);
+
+        gbc.gridy++;
+        JLabel descriptionLabel = new JLabel("Description: ");
+        inputPanel.add(descriptionLabel, gbc);
+
+        gbc.gridy++;
+        descriptionArea = new JTextArea(10, 30);
+        descriptionArea.setLineWrap(true);
+        JScrollPane descriptionScrollPane = new JScrollPane(descriptionArea);
+        inputPanel.add(descriptionScrollPane, gbc);
+
+        add(inputPanel, BorderLayout.CENTER);
+
+        JPanel buttonPanel2 = new JPanel();
         JButton sendButton = new JButton("Send");
         JButton resetButton = new JButton("Reset");
 
         sendButton.addActionListener(new SendButtonListener());
         resetButton.addActionListener(new ResetButtonListener());
 
-        messagePanel.add(titleLabel);
-        messagePanel.add(titleField);
-        messagePanel.add(messageLabel);
-        messagePanel.add(messageField);
-        messagePanel.add(sendButton);
-        messagePanel.add(resetButton);
-
-        chatArea = new JTextArea();
-        chatArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(chatArea);
-
-        add(menuBar, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
-        add(messagePanel, BorderLayout.SOUTH);
+        buttonPanel2.add(sendButton);
+        buttonPanel2.add(resetButton);
+        add(buttonPanel2, BorderLayout.SOUTH);
 
         setVisible(true);
         setLocationRelativeTo(null);
@@ -80,10 +84,12 @@ public class ForumScreen2 extends JFrame {
     private class SendButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String message = messageField.getText();
-            if (!message.isEmpty()) {
-                chatArea.append(userID + ": " + message + "\n");
-                messageField.setText("");
+            String title = titleField.getText();
+            String description = descriptionArea.getText();
+            if (!title.isEmpty() && !description.isEmpty()) {
+                
+                titleField.setText("");
+                descriptionArea.setText("");
             }
         }
     }
@@ -91,7 +97,8 @@ public class ForumScreen2 extends JFrame {
     private class ResetButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            messageField.setText("");
+            titleField.setText("");
+            descriptionArea.setText("");
         }
     }
 }
