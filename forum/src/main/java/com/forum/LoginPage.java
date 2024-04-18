@@ -26,7 +26,7 @@ public class LoginPage implements ActionListener {
 
     HashMap<String, String> logininfo;
     Socket clientSocket;
-
+    
     LoginPage(HashMap<String, String> loginInfoOriginal, Socket clientSocket) {
         IDandPassword idandpassword = new IDandPassword();
         logininfo = idandpassword.getLoginInfo();
@@ -60,8 +60,9 @@ public class LoginPage implements ActionListener {
         frame.setSize(420, 420);
         frame.setLayout(null);
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == resetButton) {
@@ -76,6 +77,7 @@ public class LoginPage implements ActionListener {
                     messageLabel.setForeground(Color.green);
                     messageLabel.setText("Login successful");
                     new ForumScreen(password);
+                    frame.dispose();
                 }
                 else {
                     messageLabel.setForeground(Color.red);

@@ -12,7 +12,7 @@ public class ForumScreen extends JFrame {
 
     public ForumScreen(String userID) {
         this.userID = userID;
-        setTitle("Simple Forum");
+        setTitle("Accueil");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLayout(new BorderLayout());
@@ -25,6 +25,7 @@ public class ForumScreen extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Ouvrir la fenêtre pour créer un fil (ForumScreen2)
+                dispose();
                 new ForumScreen2(userID);
             }
         });
@@ -33,6 +34,7 @@ public class ForumScreen extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Ouvrir la fenêtre pour rejoindre un fil (ForumScreen3)
+                dispose();
                 new ForumScreen3(userID);
             }
         });
@@ -68,6 +70,7 @@ public class ForumScreen extends JFrame {
         add(messagePanel, BorderLayout.SOUTH);
 
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
     private class SendButtonListener implements ActionListener {
