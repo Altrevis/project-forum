@@ -48,14 +48,18 @@ public class ForumScreen2 extends JFrame {
         menuBar.add(joinThreadButton);
 
         JPanel messagePanel = new JPanel();
+        JLabel titleLabel = new JLabel("Titre: ");
         JLabel messageLabel = new JLabel("Enter Message: ");
-        messageField = new JTextField(20);
+        JTextField titleField = new JTextField(10);
+        messageField = new JTextField(10);
         JButton sendButton = new JButton("Send");
         JButton resetButton = new JButton("Reset");
 
         sendButton.addActionListener(new SendButtonListener());
         resetButton.addActionListener(new ResetButtonListener());
 
+        messagePanel.add(titleLabel);
+        messagePanel.add(titleField);
         messagePanel.add(messageLabel);
         messagePanel.add(messageField);
         messagePanel.add(sendButton);

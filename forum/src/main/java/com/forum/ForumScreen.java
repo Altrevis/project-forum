@@ -17,7 +17,7 @@ public class ForumScreen extends JFrame {
         setSize(600, 400);
         setLayout(new BorderLayout());
 
-        JMenuBar menuBar = new JMenuBar();
+        new JMenuBar();
         JButton createThreadButton = new JButton("Créer un fil");
         JButton joinThreadButton = new JButton("Rejoindre un fil");
          // Intégration du code de la classe Text

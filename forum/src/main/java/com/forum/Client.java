@@ -14,7 +14,7 @@ public class Client {
 
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+            new BufferedReader(new InputStreamReader(System.in));
 
             out.println("Hello from client");
 

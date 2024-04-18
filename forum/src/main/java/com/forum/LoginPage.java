@@ -27,6 +27,7 @@ public class LoginPage implements ActionListener {
     HashMap<String, String> logininfo;
     Socket clientSocket;
     
+    @SuppressWarnings("unchecked")
     LoginPage(HashMap<String, String> loginInfoOriginal, Socket clientSocket) {
         IDandPassword idandpassword = new IDandPassword();
         logininfo = idandpassword.getLoginInfo();
