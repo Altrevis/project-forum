@@ -18,9 +18,9 @@ public class ForumScreen extends JFrame {
         setLayout(new BorderLayout());
         
         JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu("File");
-        JMenuItem openItem = new JMenuItem("Open");
-        JMenuItem saveAsItem = new JMenuItem("Save As");
+        JMenu fileMenu = new JMenu("Option");
+        JMenuItem openItem = new JMenuItem("Créer un fil");
+        JMenuItem saveAsItem = new JMenuItem("Rejoindre un fil");
         fileMenu.add(openItem);
         fileMenu.add(saveAsItem);
         menuBar.add(fileMenu);

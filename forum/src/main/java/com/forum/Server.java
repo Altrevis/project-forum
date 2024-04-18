@@ -13,7 +13,7 @@ public class Server {
         int port = 12345;
 
         try {
-            String serverAddress = "192.168.39.111"; 
+            String serverAddress = "127.0.0.1"; 
             @SuppressWarnings("resource")
             ServerSocket serverSocket = new ServerSocket(port, 0, InetAddress.getByName(serverAddress));
             System.out.println("Server started on port " + port);
@@ -22,7 +22,6 @@ public class Server {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New client connected: " + clientSocket.getInetAddress());
 
-                // Launch LoginPage when a client connects
                 SwingUtilities.invokeLater(() -> new LoginPage(new HashMap<>(), clientSocket));
 
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
