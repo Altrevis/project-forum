@@ -2,12 +2,10 @@ package com.forum;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.HashMap;
 
 public class ForumScreen2 extends JFrame {
     private JTextArea chatArea;
@@ -53,7 +51,7 @@ public class ForumScreen2 extends JFrame {
 
         JPanel messagePanel = new JPanel();
         JLabel titleLabel = new JLabel("Titre: ");
-        JLabel messageLabel = new JLabel("Enter Message: ");
+        JLabel messageLabel = new JLabel("Description: ");
         JTextField titleField = new JTextField(10);
         messageField = new JTextField(10);
         JButton sendButton = new JButton("Send");
@@ -94,30 +92,57 @@ public class ForumScreen2 extends JFrame {
             String description = messageField.getText();
 
             if (!titre.isEmpty() && !description.isEmpty()) {
-                saveThread(titre, description);
-
+                // Enregistrer le fil de discussion dans la base de données
+                saveThread(userID, titre, description);
+                
+                // Enregistrer le template HTML dans la base de données
+                CreateDB.saveTemplate(userID, titre, description);
+                
+                // Afficher un message dans la console
+                System.out.println("Template HTML enregistré dans la base de données avec succès !");
+                
                 chatArea.append(userID + ": " + titre + " - " + description + "\n");
                 titleField.setText("");
                 messageField.setText("");
             }
         }
 
-        private void saveThread(String titre, String description) {
-            String url = "jdbc:mysql://localhost:3306/db_forum";
-            String user = "root";
-            String password = "password";
+        private void saveThread(String userID, String titre, String description) {
+            
+            IDandPassword idAndPassword = new IDandPassword();
+            @SuppressWarnings("unchecked")
+            HashMap<String, String> loginInfo = idAndPassword.getLoginInfo();
+            userID = loginInfo.keySet().iterator().next();
 
-            try (Connection connection = DriverManager.getConnection(url, user, password)) {
-                Statement statement = connection.createStatement();
-
-                String sqlInsert = "INSERT INTO threads (titre, description) VALUES ('" + titre + "', '" + description + "')";
-                statement.executeUpdate(sqlInsert);
-
-                System.out.println("Fil de discussion enregistré dans la base de données avec succès !");
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+                String url = "jdbc:mysql://localhost:3306/db_forum";
+                String user = "root";
+                String password = "password";
+                String sqlCreateTable = "CREATE TABLE IF NOT EXISTS threads (" +
+                                        "userID VARCHAR(50), " +
+                                        "titre VARCHAR(100), " +
+                                        "description TEXT" +
+                                        ")";
+        
+                                        String sqlInsert = "INSERT INTO threads (userID, titre, description) VALUES (?, ?, ?)";
+        
+                try (Connection connection = DriverManager.getConnection(url, user, password);
+                     PreparedStatement createStatement = connection.prepareStatement(sqlCreateTable);
+                     PreparedStatement insertStatement = connection.prepareStatement(sqlInsert)) {
+        
+                    
+                    createStatement.executeUpdate();
+        
+                    
+                    insertStatement.setString(1, userID);
+                    insertStatement.setString(2, titre);
+                    insertStatement.setString(3, description);
+                    insertStatement.executeUpdate();
+        
+                    System.out.println("Data saved successfully.");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-        }
     }
 
     private class ResetButtonListener implements ActionListener {
