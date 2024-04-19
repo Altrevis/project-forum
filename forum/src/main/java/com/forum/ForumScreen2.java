@@ -92,6 +92,10 @@ public class ForumScreen2 extends JFrame {
             String description = messageField.getText();
 
             if (!titre.isEmpty() && !description.isEmpty()) {
+                IDandPassword idAndPassword = new IDandPassword();
+                @SuppressWarnings("unchecked")
+                HashMap<String, String> loginInfo = idAndPassword.getLoginInfo();
+                userID = loginInfo.keySet().iterator().next();
                 // Enregistrer le fil de discussion dans la base de données
                 saveThread(userID, titre, description);
                 
