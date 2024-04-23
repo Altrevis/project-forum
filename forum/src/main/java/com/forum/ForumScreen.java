@@ -31,9 +31,9 @@ public class ForumScreen extends JFrame {
         createThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Ouvrir la fenêtre pour créer un fil (ForumScreen2)
+                // Ouvrir la fenêtre pour créer un fil (ForumTemplate)
                 dispose();
-                new ForumScreen2(userID);
+                new ForumTemplate(userID);
             }
         });
 
