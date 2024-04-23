@@ -4,19 +4,33 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class ForumScreen3 extends JFrame {
-    private JTextArea chatArea;
-    private JTextField messageField;
-    private String userID;
+    private JList<String> threadList;
 
     public ForumScreen3(String userID) {
-        this.userID = userID;
         setTitle("Rejoindre un fil");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLayout(new BorderLayout());
         
+        ArrayList<String> threads = getThreadsFromDatabase();
+
+
+
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        for (String thread : threads) {
+            listModel.addElement(thread);
+        }
+        threadList = new JList<>(listModel);
+        JScrollPane scrollPane = new JScrollPane(threadList);
+
+
+           add(scrollPane, BorderLayout.CENTER);
+
+
         JMenuBar menuBar = new JMenuBar();
         JButton createThreadButton = new JButton("Accueil");
         JButton joinThreadButton = new JButton("Créer un fil");
@@ -48,47 +62,35 @@ public class ForumScreen3 extends JFrame {
         menuBar.add(createThreadButton);
         menuBar.add(joinThreadButton);
 
-        JPanel messagePanel = new JPanel();
-        JLabel messageLabel = new JLabel("Enter Message: ");
-        messageField = new JTextField(20);
-        JButton sendButton = new JButton("Send");
-        JButton resetButton = new JButton("Reset");
+;
 
-        sendButton.addActionListener(new SendButtonListener());
-        resetButton.addActionListener(new ResetButtonListener());
-
-        messagePanel.add(messageLabel);
-        messagePanel.add(messageField);
-        messagePanel.add(sendButton);
-        messagePanel.add(resetButton);
-
-        chatArea = new JTextArea();
-        chatArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(chatArea);
 
         add(menuBar, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
-        add(messagePanel, BorderLayout.SOUTH);
+
 
         setVisible(true);
         setLocationRelativeTo(null);
     }
 
-    private class SendButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String message = messageField.getText();
-            if (!message.isEmpty()) {
-                chatArea.append(userID + ": " + message + "\n");
-                messageField.setText("");
-            }
-        }
-    }
+     private ArrayList<String> getThreadsFromDatabase() {
+        ArrayList<String> threads = new ArrayList<>();
+        String url = "jdbc:mysql://localhost:3306/db_forum";
+        String user = "root";
+        String password = "password";
+        String sqlSelect = "SELECT * FROM threads";
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sqlSelect)) {
+            while (resultSet.next()) {
+                String userID = resultSet.getString("userID");
+                String titre = resultSet.getString("titre");
+                String description = resultSet.getString("description");
 
-    private class ResetButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            messageField.setText("");
+                threads.add("UserID: " + userID + ", Titre: " + titre + ", Description: " + description);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return threads;
     }
 }
