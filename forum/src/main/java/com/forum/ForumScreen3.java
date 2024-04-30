@@ -12,9 +12,7 @@ import java.util.ArrayList;
 
 public class ForumScreen3 extends JFrame {
     private JList<String> threadList;
-    private String userID;
     public ForumScreen3(String userID) {
-        this.userID = userID;
         setTitle("Rejoindre un fil");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);

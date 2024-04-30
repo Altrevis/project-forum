@@ -10,11 +10,8 @@ public class ForumScreen4 extends JFrame {
     private JTextArea chatArea;
     private JTextField messageField;
     private String userID;
-    private String selectedThreadInfo;
-
     public ForumScreen4(String userID, String selectedThreadInfo) {
         this.userID = userID;
-        this.selectedThreadInfo = selectedThreadInfo;
         setTitle("Thread");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
