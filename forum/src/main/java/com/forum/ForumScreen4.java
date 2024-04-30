@@ -10,23 +10,35 @@ public class ForumScreen4 extends JFrame {
     private JTextArea chatArea;
     private JTextField messageField;
     private String userID;
+    private String selectedThreadInfo;
 
-    public ForumScreen4(String userID) {
+    public ForumScreen4(String userID, String selectedThreadInfo) {
         this.userID = userID;
-        setTitle("Accueil");
+        this.selectedThreadInfo = selectedThreadInfo;
+        setTitle("Thread");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLayout(new BorderLayout());
 
+    
+        
+       chatArea = new JTextArea();
+        chatArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(chatArea);
+        add(scrollPane, BorderLayout.CENTER);
+        
+       
         new JMenuBar();
         JButton createThreadButton = new JButton("Créer un fil");
         JButton joinThreadButton = new JButton("Rejoindre un fil");
-         // Intégration du code de la classe Text
-         String textToDisplay = "Bienvenue sur le forum";
-         JLabel label = new JLabel(textToDisplay);
-         label.setBounds(200, 20, 300, 50);
-         add(label, BorderLayout.CENTER); // Utilisation du BorderLayout.CENTER pour afficher le texte au centre
+        // Intégration du code de la classe Text
+   
+        
+        JLabel label = new JLabel(selectedThreadInfo);
+       
+        add(label, BorderLayout.CENTER); // Utilisation du BorderLayout.CENTER pour afficher le texte au centre
 
+       
 
         createThreadButton.addActionListener(new ActionListener() {
             @Override
@@ -62,13 +74,13 @@ public class ForumScreen4 extends JFrame {
         resetButton.addActionListener(new ResetButtonListener());
 
         messagePanel.add(messageLabel);
+        messagePanel.add(label);
         messagePanel.add(messageField);
         messagePanel.add(sendButton);
         messagePanel.add(resetButton);
 
-        chatArea = new JTextArea();
-        chatArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(chatArea);
+      
+       
 
         add(scrollPane, BorderLayout.CENTER); // Déplacer le chatArea vers le centre
         add(messagePanel, BorderLayout.SOUTH);
@@ -83,9 +95,9 @@ public class ForumScreen4 extends JFrame {
             String message = messageField.getText();
             if (!message.isEmpty()) {
                 IDandPassword idAndPassword = new IDandPassword();
-            @SuppressWarnings("unchecked")
-            HashMap<String, String> loginInfo = idAndPassword.getLoginInfo();
-            userID = loginInfo.keySet().iterator().next();
+                @SuppressWarnings("unchecked")
+                HashMap<String, String> loginInfo = idAndPassword.getLoginInfo();
+                userID = loginInfo.keySet().iterator().next();
                 chatArea.append(userID + ": " + message + "\n");
                 messageField.setText("");
             }

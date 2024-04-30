@@ -1,6 +1,9 @@
 package com.forum;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,16 +12,15 @@ import java.util.ArrayList;
 
 public class ForumScreen3 extends JFrame {
     private JList<String> threadList;
-
+    private String userID;
     public ForumScreen3(String userID) {
+        this.userID = userID;
         setTitle("Rejoindre un fil");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setLayout(new BorderLayout());
-        
+
         ArrayList<String> threads = getThreadsFromDatabase();
-
-
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
         for (String thread : threads) {
@@ -27,24 +29,36 @@ public class ForumScreen3 extends JFrame {
         threadList = new JList<>(listModel);
         JScrollPane scrollPane = new JScrollPane(threadList);
 
-
-           add(scrollPane, BorderLayout.CENTER);
-
+        add(scrollPane, BorderLayout.CENTER);
 
         JMenuBar menuBar = new JMenuBar();
         JButton createThreadButton = new JButton("Accueil");
         JButton joinThreadButton = new JButton("Créer un fil");
-        
+
         createThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Ouvrir la fenêtre pour créer un fil (ForumScreen2)
                 dispose();
                 new ForumScreen(userID);
-                
+
             }
         });
-        
+        threadList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    String selectedThread = threadList.getSelectedValue();
+                    if (selectedThread != null) {
+                        dispose();
+                        // Получение информации о выбранном thread
+                        String threadInfo = getThreadInfo(selectedThread);
+                        new ForumScreen4(userID, threadInfo);
+                    }
+                }
+            }
+        });
+
         joinThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,7 +67,7 @@ public class ForumScreen3 extends JFrame {
                 new ForumTemplate(userID);
             }
         });
-        
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(createThreadButton);
         buttonPanel.add(joinThreadButton);
@@ -62,25 +76,24 @@ public class ForumScreen3 extends JFrame {
         menuBar.add(createThreadButton);
         menuBar.add(joinThreadButton);
 
-;
-
+        ;
 
         add(menuBar, BorderLayout.NORTH);
-
 
         setVisible(true);
         setLocationRelativeTo(null);
     }
-
-     private ArrayList<String> getThreadsFromDatabase() {
+    
+    
+    private ArrayList<String> getThreadsFromDatabase() {
         ArrayList<String> threads = new ArrayList<>();
         String url = "jdbc:mysql://localhost:3306/db_forum";
         String user = "root";
         String password = "password";
         String sqlSelect = "SELECT * FROM threads";
         try (Connection connection = DriverManager.getConnection(url, user, password);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sqlSelect)) {
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sqlSelect)) {
             while (resultSet.next()) {
                 String userID = resultSet.getString("userID");
                 String titre = resultSet.getString("titre");
@@ -92,5 +105,15 @@ public class ForumScreen3 extends JFrame {
             e.printStackTrace();
         }
         return threads;
+        
+    }
+    private String getThreadInfo(String selectedThread) {
+        ArrayList<String> threads = getThreadsFromDatabase();
+        for (String thread : threads) {
+            if (thread.contains(selectedThread)) {
+                return thread;
+            }
+        }
+        return null;
     }
 }
