@@ -33,7 +33,7 @@ public class ForumScreen4 extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Ouvrir la fenêtre pour créer un fil (ForumScreen2)
                 dispose();
-                new ForumScreen2(userID);
+                new ForumTemplate(userID);
             }
         });
 

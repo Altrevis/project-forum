@@ -56,7 +56,7 @@ public class ForumTemplate extends JFrame {
                 
                 // Fermer la fenêtre courante et revenir à ForumScreen2
                 dispose();
-                new ForumScreen2(pseudo); // Utilisez le pseudo pour initialiser le champ pseudo dans ForumScreen2
+                new ForumScreen3(pseudo); // Utilisez le pseudo pour initialiser le champ pseudo dans ForumScreen2
             } else {
                 JOptionPane.showMessageDialog(ForumTemplate.this, "Veuillez remplir tous les champs.", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
@@ -83,7 +83,7 @@ public class ForumTemplate extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new ForumScreen2("User123"); // Par défaut, nous passons un userID (pseudo) à la fenêtre
+            new ForumTemplate("User123"); // Par défaut, nous passons un userID (pseudo) à la fenêtre
         });
     }
 }

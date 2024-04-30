@@ -50,7 +50,7 @@ public class ForumScreen3 extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Ouvrir la fenêtre pour rejoindre un fil (ForumScreen3)
                 dispose();
-                new ForumScreen2(userID);
+                new ForumTemplate(userID);
             }
         });
         
