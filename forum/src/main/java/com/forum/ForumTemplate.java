@@ -66,15 +66,25 @@ public class ForumTemplate extends JFrame {
             String url = "jdbc:mysql://localhost:3306/db_forum";
             String user = "root";
             String password = "password";
-            String sqlInsert = "INSERT INTO threads (userID, titre, description) VALUES (?, ?, ?)";
-
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS threads (" +
+                                    "id INT AUTO_INCREMENT PRIMARY KEY," +
+                                    "userID VARCHAR(255)," +
+                                    "titre VARCHAR(255)," +
+                                    "description TEXT)";
+            String insertSQL = "INSERT INTO threads (userID, titre, description) VALUES (?, ?, ?)";
+        
             try (Connection connection = DriverManager.getConnection(url, user, password);
-                 PreparedStatement insertStatement = connection.prepareStatement(sqlInsert)) {
+                 Statement statement = connection.createStatement();
+                 PreparedStatement insertStatement = connection.prepareStatement(insertSQL)) {
+                
+                statement.executeUpdate(createTableSQL);
+                
                 insertStatement.setString(1, pseudo);
                 insertStatement.setString(2, titre);
                 insertStatement.setString(3, question);
                 insertStatement.executeUpdate();
                 System.out.println("Thread saved successfully.");
+                
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

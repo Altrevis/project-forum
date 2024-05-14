@@ -66,6 +66,7 @@ public class LoginPage implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
+       
         if (e.getSource() == resetButton) {
             userIDField.setText("");
             userPasswordField.setText("");
@@ -77,7 +78,7 @@ public class LoginPage implements ActionListener {
                 if (logininfo.get(userID).equals(password)) {
                     messageLabel.setForeground(Color.green);
                     messageLabel.setText("Login successful");
-                    CreateDB.main(null);
+                    
                     CreateDB.saveUserID(userID);
                     new ForumScreen(password);
                     frame.dispose();

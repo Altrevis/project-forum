@@ -4,22 +4,7 @@ import java.util.HashMap;
 
 public class CreateDB {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/";
-        String user = "root";
-        String password = "password";
-
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            Statement statement = connection.createStatement();
-
-            String sqlCreateDatabase = "CREATE DATABASE IF NOT EXISTS db_forum";
-            statement.executeUpdate(sqlCreateDatabase);
-
-            String sqlUseDatabase = "USE db_forum";
-            statement.executeUpdate(sqlUseDatabase);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+      
     }
 
     public static void saveTemplate(String userID, String title, String description) {
@@ -30,7 +15,7 @@ public class CreateDB {
         
         
     
-        String url = "jdbc:mysql://localhost:3306/db_forum";
+        String url = "jdbc:mysql://localhost:3306/db_foum";
         String user = "root";
         String password = "password";
 	        String sqlCreateTable = "CREATE TABLE IF NOT EXISTS forum_templates (" +
@@ -64,9 +49,24 @@ public class CreateDB {
 
 
     public static void saveUserID(String userID) {
-        String url = "jdbc:mysql://localhost:3306/db_forum";
+        String url = "jdbc:mysql://localhost:3306/";
         String user = "root";
         String password = "password";
+
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+            Statement statement = connection.createStatement();
+
+            String sqlCreateDatabase = "CREATE DATABASE IF NOT EXISTS db_forum";
+            statement.executeUpdate(sqlCreateDatabase);
+
+            String sqlUseDatabase = "USE db_foum";
+            statement.executeUpdate(sqlUseDatabase);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        url = "jdbc:mysql://localhost:3306/db_forum";
+        
     
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             Statement statement = connection.createStatement();
