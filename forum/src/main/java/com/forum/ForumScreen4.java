@@ -58,10 +58,13 @@ public class ForumScreen4 extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(createThreadButton);
         buttonPanel.add(joinThreadButton);
-
         add(buttonPanel, BorderLayout.NORTH);
 
         JPanel messagePanel = new JPanel();
+        messagePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0)); // Ajouter une marge supérieure de 10 pixels
+
+        add(buttonPanel, BorderLayout.NORTH);
+
         JLabel messageLabel = new JLabel("Enter Message: ");
         messageField = new JTextField(20);
         JButton sendButton = new JButton("Send");

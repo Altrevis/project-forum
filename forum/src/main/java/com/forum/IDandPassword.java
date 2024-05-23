@@ -8,6 +8,7 @@ public class IDandPassword {
     IDandPassword() {
         logininfo.put("alexandre", "a");
         logininfo.put("altrevis", "a1");
+        logininfo.put("a", "a");
     }
     @SuppressWarnings("rawtypes")
     protected HashMap getLoginInfo() {
