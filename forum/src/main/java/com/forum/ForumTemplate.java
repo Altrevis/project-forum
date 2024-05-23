@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class ForumTemplate extends JFrame {
     private JTextField titreField;
-    private JTextField pseudoField;
+    
     private JTextArea questionArea;
 
     public ForumTemplate(String userID) {
@@ -18,19 +18,19 @@ public class ForumTemplate extends JFrame {
 
         JPanel panel = new JPanel(new GridLayout(4, 2));
         JLabel titreLabel = new JLabel("Titre: ");
-        JLabel pseudoLabel = new JLabel("Pseudo: ");
+       
         JLabel questionLabel = new JLabel("Question: ");
         titreField = new JTextField();
-        pseudoField = new JTextField(userID); // Le pseudo est automatiquement rempli avec l'userID
+      
         questionArea = new JTextArea();
         JButton sendButton = new JButton("Envoyer");
-
+        
         sendButton.addActionListener(new SendButtonListener());
 
         panel.add(titreLabel);
         panel.add(titreField);
-        panel.add(pseudoLabel);
-        panel.add(pseudoField);
+       
+        
         panel.add(questionLabel);
         panel.add(new JScrollPane(questionArea));
         panel.add(new JLabel());
@@ -46,7 +46,7 @@ public class ForumTemplate extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             String titre = titreField.getText();
-            String pseudo = pseudoField.getText();
+            String pseudo = pseudo;
             String question = questionArea.getText();
 
             if (!titre.isEmpty() && !pseudo.isEmpty() && !question.isEmpty()) {
