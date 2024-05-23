@@ -7,10 +7,11 @@ import java.sql.*;
 
 public class ForumTemplate extends JFrame {
     private JTextField titreField;
-    
     private JTextArea questionArea;
+    private String userID; // Utiliser pour stocker le pseudo passé au constructeur
 
     public ForumTemplate(String userID) {
+        this.userID = userID; // Initialiser le pseudo
         setTitle("Créer un fil");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
@@ -18,10 +19,8 @@ public class ForumTemplate extends JFrame {
 
         JPanel panel = new JPanel(new GridLayout(4, 2));
         JLabel titreLabel = new JLabel("Titre: ");
-       
         JLabel questionLabel = new JLabel("Question: ");
         titreField = new JTextField();
-      
         questionArea = new JTextArea();
         JButton sendButton = new JButton("Envoyer");
         
@@ -29,11 +28,9 @@ public class ForumTemplate extends JFrame {
 
         panel.add(titreLabel);
         panel.add(titreField);
-       
-        
         panel.add(questionLabel);
         panel.add(new JScrollPane(questionArea));
-        panel.add(new JLabel());
+        panel.add(new JLabel()); // Pour aligner le bouton
         panel.add(sendButton);
 
         add(panel, BorderLayout.CENTER);
@@ -46,17 +43,16 @@ public class ForumTemplate extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             String titre = titreField.getText();
-            String pseudo = pseudo;
             String question = questionArea.getText();
 
-            if (!titre.isEmpty() && !pseudo.isEmpty() && !question.isEmpty()) {
-                saveThread(titre, pseudo, question);
+            if (!titre.isEmpty() && !question.isEmpty()) {
+                saveThread(titre, userID, question);
                 titreField.setText("");
                 questionArea.setText("");
                 
                 // Fermer la fenêtre courante et revenir à ForumScreen2
                 dispose();
-                new ForumScreen3(pseudo); // Utilisez le pseudo pour initialiser le champ pseudo dans ForumScreen2
+                new ForumScreen3(userID); // Utilisez le pseudo pour initialiser le champ pseudo dans ForumScreen3
             } else {
                 JOptionPane.showMessageDialog(ForumTemplate.this, "Veuillez remplir tous les champs.", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
