@@ -73,14 +73,14 @@ public class LoginPage implements ActionListener {
         }
         if (e.getSource() == loginButton) {
             String userID = userIDField.getText();
-            String password = String.valueOf(userPasswordField.getPassword());
+ 
            
                 
                     messageLabel.setForeground(Color.green);
                     messageLabel.setText("Login successful");
                     
                     CreateDB.saveUserID(userID);
-                    new ForumScreen(password);
+                    new ForumScreen(userID);
                     frame.dispose();
                 
                 
