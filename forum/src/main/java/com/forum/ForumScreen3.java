@@ -3,7 +3,6 @@ package com.forum;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 
 public class ForumScreen3 extends JFrame {
     private JList<String> threadList;
+
     public ForumScreen3(String userID) {
         setTitle("Rejoindre un fil");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,16 +32,17 @@ public class ForumScreen3 extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JButton createThreadButton = new JButton("Accueil");
         JButton joinThreadButton = new JButton("Créer un fil");
+        JButton refreshButton = new JButton("Refresh"); // Bouton de rafraîchissement
 
         createThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Ouvrir la fenêtre pour créer un fil (ForumScreen2)
+                // Ouvrir la fenêtre d'accueil (ForumScreen)
                 dispose();
                 new ForumScreen(userID);
-
             }
         });
+
         threadList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -60,29 +61,36 @@ public class ForumScreen3 extends JFrame {
         joinThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Ouvrir la fenêtre pour rejoindre un fil (ForumScreen3)
+                // Ouvrir la fenêtre pour créer un fil (ForumTemplate)
                 dispose();
                 new ForumTemplate(userID);
+            }
+        });
+
+        refreshButton.addActionListener(new ActionListener() { // Action pour le bouton de rafraîchissement
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new ForumScreen3(userID); // Ouvrir une nouvelle instance de ForumScreen3
             }
         });
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(createThreadButton);
         buttonPanel.add(joinThreadButton);
+        buttonPanel.add(refreshButton); // Ajouter le bouton de rafraîchissement
 
         add(buttonPanel, BorderLayout.NORTH);
         menuBar.add(createThreadButton);
         menuBar.add(joinThreadButton);
-
-        ;
+        menuBar.add(refreshButton); // Ajouter le bouton de rafraîchissement au menu
 
         add(menuBar, BorderLayout.NORTH);
 
         setVisible(true);
         setLocationRelativeTo(null);
     }
-    
-    
+
     private ArrayList<String> getThreadsFromDatabase() {
         ArrayList<String> threads = new ArrayList<>();
         String url = "jdbc:mysql://localhost:3306/db_forum";
@@ -90,8 +98,8 @@ public class ForumScreen3 extends JFrame {
         String password = "password";
         String sqlSelect = "SELECT * FROM threads";
         try (Connection connection = DriverManager.getConnection(url, user, password);
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(sqlSelect)) {
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sqlSelect)) {
             while (resultSet.next()) {
                 String userID = resultSet.getString("userID");
                 String titre = resultSet.getString("titre");
@@ -103,8 +111,8 @@ public class ForumScreen3 extends JFrame {
             e.printStackTrace();
         }
         return threads;
-        
     }
+
     private String getThreadInfo(String selectedThread) {
         ArrayList<String> threads = getThreadsFromDatabase();
         for (String thread : threads) {

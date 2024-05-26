@@ -21,12 +21,13 @@ public class ForumScreen extends JFrame {
         new JMenuBar();
         JButton createThreadButton = new JButton("Créer un fil");
         JButton joinThreadButton = new JButton("Rejoindre un fil");
-         // Intégration du code de la classe Text
-         String textToDisplay = "Bienvenue sur le forum";
-         JLabel label = new JLabel(textToDisplay);
-         label.setBounds(200, 20, 300, 50);
-         add(label, BorderLayout.CENTER); // Utilisation du BorderLayout.CENTER pour afficher le texte au centre
+        JButton refreshButton = new JButton("Refresh"); // Bouton de rafraîchissement
 
+        // Intégration du code de la classe Text
+        String textToDisplay = "Bienvenue sur le forum";
+        JLabel label = new JLabel(textToDisplay);
+        label.setBounds(200, 20, 300, 50);
+        add(label, BorderLayout.CENTER); // Utilisation du BorderLayout.CENTER pour afficher le texte au centre
 
         createThreadButton.addActionListener(new ActionListener() {
             @Override
@@ -46,9 +47,18 @@ public class ForumScreen extends JFrame {
             }
         });
 
+        refreshButton.addActionListener(new ActionListener() { // Action pour le bouton de rafraîchissement
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new ForumScreen(userID); // Ouvrir une nouvelle instance de ForumScreen
+            }
+        });
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(createThreadButton);
         buttonPanel.add(joinThreadButton);
+        buttonPanel.add(refreshButton); // Ajouter le bouton de rafraîchissement
 
         add(buttonPanel, BorderLayout.NORTH);
 
@@ -83,9 +93,9 @@ public class ForumScreen extends JFrame {
             String message = messageField.getText();
             if (!message.isEmpty()) {
                 IDandPassword idAndPassword = new IDandPassword();
-            @SuppressWarnings("unchecked")
-            HashMap<String, String> loginInfo = idAndPassword.getLoginInfo();
-            userID = loginInfo.keySet().iterator().next();
+                @SuppressWarnings("unchecked")
+                HashMap<String, String> loginInfo = idAndPassword.getLoginInfo();
+                userID = loginInfo.keySet().iterator().next();
                 chatArea.append(userID + ": " + message + "\n");
                 messageField.setText("");
             }

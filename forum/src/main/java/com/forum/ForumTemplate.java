@@ -23,8 +23,17 @@ public class ForumTemplate extends JFrame {
         titreField = new JTextField();
         questionArea = new JTextArea();
         JButton sendButton = new JButton("Envoyer");
+        JButton refreshButton = new JButton("Refresh"); // Bouton de rafraîchissement
         
         sendButton.addActionListener(new SendButtonListener());
+
+        refreshButton.addActionListener(new ActionListener() { // Action pour le bouton de rafraîchissement
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new ForumTemplate(userID); // Ouvrir une nouvelle instance de ForumTemplate
+            }
+        });
 
         panel.add(titreLabel);
         panel.add(titreField);
@@ -32,6 +41,8 @@ public class ForumTemplate extends JFrame {
         panel.add(new JScrollPane(questionArea));
         panel.add(new JLabel()); // Pour aligner le bouton
         panel.add(sendButton);
+        panel.add(new JLabel()); // Pour aligner le bouton
+        panel.add(refreshButton); // Ajouter le bouton de rafraîchissement
 
         add(panel, BorderLayout.CENTER);
 
@@ -50,7 +61,7 @@ public class ForumTemplate extends JFrame {
                 titreField.setText("");
                 questionArea.setText("");
                 
-                // Fermer la fenêtre courante et revenir à ForumScreen2
+                // Fermer la fenêtre courante et revenir à ForumScreen3
                 dispose();
                 new ForumScreen3(userID); // Utilisez le pseudo pour initialiser le champ pseudo dans ForumScreen3
             } else {

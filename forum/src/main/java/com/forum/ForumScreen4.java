@@ -10,6 +10,7 @@ public class ForumScreen4 extends JFrame {
     private JTextArea chatArea;
     private JTextField messageField;
     private String userID;
+
     public ForumScreen4(String userID, String selectedThreadInfo) {
         this.userID = userID;
         setTitle("Thread");
@@ -17,30 +18,23 @@ public class ForumScreen4 extends JFrame {
         setSize(600, 400);
         setLayout(new BorderLayout());
 
-    
-        
-       chatArea = new JTextArea();
+        chatArea = new JTextArea();
         chatArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(chatArea);
         add(scrollPane, BorderLayout.CENTER);
-        
-       
+
         new JMenuBar();
         JButton createThreadButton = new JButton("Créer un fil");
         JButton joinThreadButton = new JButton("Rejoindre un fil");
-        // Intégration du code de la classe Text
-   
-        
-        JLabel label = new JLabel(selectedThreadInfo);
-       
-        add(label, BorderLayout.CENTER); // Utilisation du BorderLayout.CENTER pour afficher le texte au centre
+        JButton refreshButton = new JButton("Refresh"); // Bouton de rafraîchissement
 
-       
+        JLabel label = new JLabel(selectedThreadInfo);
+        add(label, BorderLayout.CENTER); // Utilisation du BorderLayout.CENTER pour afficher le texte au centre
 
         createThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Ouvrir la fenêtre pour créer un fil (ForumScreen2)
+                // Ouvrir la fenêtre pour créer un fil (ForumTemplate)
                 dispose();
                 new ForumTemplate(userID);
             }
@@ -55,15 +49,23 @@ public class ForumScreen4 extends JFrame {
             }
         });
 
+        refreshButton.addActionListener(new ActionListener() { // Action pour le bouton de rafraîchissement
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new ForumScreen4(userID, selectedThreadInfo); // Ouvrir une nouvelle instance de ForumScreen4
+            }
+        });
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(createThreadButton);
         buttonPanel.add(joinThreadButton);
+        buttonPanel.add(refreshButton); // Ajouter le bouton de rafraîchissement
+
         add(buttonPanel, BorderLayout.NORTH);
 
         JPanel messagePanel = new JPanel();
-        messagePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0)); // Ajouter une marge supérieure de 10 pixels
-
-        add(buttonPanel, BorderLayout.NORTH);
+        messagePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0)); // Ajouter une marge supérieure de 20 pixels
 
         JLabel messageLabel = new JLabel("Enter Message: ");
         messageField = new JTextField(20);
@@ -74,17 +76,11 @@ public class ForumScreen4 extends JFrame {
         resetButton.addActionListener(new ResetButtonListener());
 
         messagePanel.add(messageLabel);
-        messagePanel.add(label);
         messagePanel.add(messageField);
         messagePanel.add(sendButton);
         messagePanel.add(resetButton);
 
-      
-       
-
-        add(scrollPane, BorderLayout.CENTER); // Déplacer le chatArea vers le centre
         add(messagePanel, BorderLayout.SOUTH);
-
         setVisible(true);
         setLocationRelativeTo(null);
     }
