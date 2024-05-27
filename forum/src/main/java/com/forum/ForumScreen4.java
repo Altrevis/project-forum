@@ -26,7 +26,7 @@ public class ForumScreen4 extends JFrame {
         new JMenuBar();
         JButton createThreadButton = new JButton("Créer un fil");
         JButton joinThreadButton = new JButton("Rejoindre un fil");
-        JButton refreshButton = new JButton("Refresh"); // Bouton de rafraîchissement
+        JButton refreshButton = new JButton("Re-lancer"); // Bouton de rafraîchissement
 
         JLabel label = new JLabel(selectedThreadInfo);
         add(label, BorderLayout.CENTER); // Utilisation du BorderLayout.CENTER pour afficher le texte au centre

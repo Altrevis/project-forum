@@ -17,14 +17,16 @@ public class ForumTemplate extends JFrame {
         setSize(600, 400);
         setLayout(new BorderLayout());
 
-        JPanel panel = new JPanel(new GridLayout(4, 2));
+        JPanel panel = new JPanel(new GridLayout(5, 2));
         JLabel titreLabel = new JLabel("Titre: ");
         JLabel questionLabel = new JLabel("Question: ");
         titreField = new JTextField();
         questionArea = new JTextArea();
         JButton sendButton = new JButton("Envoyer");
+        JButton backButton = new JButton("Retour"); // Bouton Retour
         
         sendButton.addActionListener(new SendButtonListener());
+        backButton.addActionListener(new BackButtonListener()); // Ajouter l'écouteur d'événements pour le bouton Retour
 
         panel.add(titreLabel);
         panel.add(titreField);
@@ -33,6 +35,7 @@ public class ForumTemplate extends JFrame {
         panel.add(new JLabel()); // Pour aligner le bouton
         panel.add(sendButton);
         panel.add(new JLabel()); // Pour aligner le bouton
+        panel.add(backButton); // Ajouter le bouton Retour
 
         add(panel, BorderLayout.CENTER);
 
@@ -85,6 +88,14 @@ public class ForumTemplate extends JFrame {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+        }
+    }
+
+    private class BackButtonListener implements ActionListener { // Écouteur pour le bouton Retour
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dispose();
+            new ForumScreen(userID); // Ouvrir la fenêtre ForumScreen avec le userID
         }
     }
 

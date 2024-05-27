@@ -21,7 +21,7 @@ public class ForumScreen extends JFrame {
         new JMenuBar();
         JButton createThreadButton = new JButton("Créer un fil");
         JButton joinThreadButton = new JButton("Rejoindre un fil");
-        JButton refreshButton = new JButton("Refresh"); // Bouton de rafraîchissement
+        JButton refreshButton = new JButton("Re-lancer"); // Bouton de rafraîchissement
 
         // Intégration du code de la classe Text
         String textToDisplay = "Bienvenue sur le forum";

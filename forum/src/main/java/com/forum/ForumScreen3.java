@@ -32,7 +32,7 @@ public class ForumScreen3 extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JButton createThreadButton = new JButton("Accueil");
         JButton joinThreadButton = new JButton("Créer un fil");
-        JButton refreshButton = new JButton("Refresh"); // Bouton de rafraîchissement
+        JButton refreshButton = new JButton("Re-lancer"); // Bouton de rafraîchissement
 
         createThreadButton.addActionListener(new ActionListener() {
             @Override
