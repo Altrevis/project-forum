@@ -44,19 +44,18 @@ public class ForumScreen3 extends JFrame {
         });
 
         threadList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    String selectedThread = threadList.getSelectedValue();
-                    if (selectedThread != null) {
-                        dispose();
-                        // Получение информации о выбранном thread
-                        String threadInfo = getThreadInfo(selectedThread);
-                        new ForumScreen4(userID, threadInfo);
-                    }
-                }
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (!e.getValueIsAdjusting()) {
+            String selectedThread = threadList.getSelectedValue();
+            if (selectedThread != null) {
+                dispose();
+                String threadInfo = getThreadInfo(selectedThread);
+                new ForumScreen4(userID, threadInfo);
             }
-        });
+        }
+    }
+});
 
         joinThreadButton.addActionListener(new ActionListener() {
             @Override
@@ -114,12 +113,28 @@ public class ForumScreen3 extends JFrame {
     }
 
     private String getThreadInfo(String selectedThread) {
-        ArrayList<String> threads = getThreadsFromDatabase();
-        for (String thread : threads) {
-            if (thread.contains(selectedThread)) {
-                return thread;
+        String threadInfo = null;
+        String url = "jdbc:mysql://localhost:3306/db_forum";
+        String user = "root";
+        String password = "password";
+        String sqlSelect = "SELECT * FROM threads WHERE titre = ?";
+    
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement(sqlSelect)) {
+            statement.setString(1, selectedThread.split(", ")[1].split(": ")[1]);  // Извлечение заголовка из строки
+            ResultSet resultSet = statement.executeQuery();
+    
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String userID = resultSet.getString("userID");
+                String titre = resultSet.getString("titre");
+                String description = resultSet.getString("description");
+                threadInfo = id + ", UserID: " + userID + ", Titre: " + titre + ", Description: " + description;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+    
+        return threadInfo;
     }
 }

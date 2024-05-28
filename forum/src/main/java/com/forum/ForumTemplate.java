@@ -24,7 +24,7 @@ public class ForumTemplate extends JFrame {
         questionArea = new JTextArea();
         JButton sendButton = new JButton("Envoyer");
         JButton backButton = new JButton("Retour"); // Bouton Retour
-        
+
         sendButton.addActionListener(new SendButtonListener());
         backButton.addActionListener(new BackButtonListener()); // Ajouter l'écouteur d'événements pour le bouton Retour
 
@@ -53,12 +53,13 @@ public class ForumTemplate extends JFrame {
                 saveThread(titre, userID, question);
                 titreField.setText("");
                 questionArea.setText("");
-                
+
                 // Fermer la fenêtre courante et revenir à ForumScreen3
                 dispose();
                 new ForumScreen3(userID); // Utilisez le pseudo pour initialiser le champ pseudo dans ForumScreen3
             } else {
-                JOptionPane.showMessageDialog(ForumTemplate.this, "Veuillez remplir tous les champs.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(ForumTemplate.this, "Veuillez remplir tous les champs.", "Erreur",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -67,24 +68,39 @@ public class ForumTemplate extends JFrame {
             String user = "root";
             String password = "password";
             String createTableSQL = "CREATE TABLE IF NOT EXISTS threads (" +
-                                    "id INT AUTO_INCREMENT PRIMARY KEY," +
-                                    "userID VARCHAR(255)," +
-                                    "titre VARCHAR(255)," +
-                                    "description TEXT)";
+                    "id INT AUTO_INCREMENT PRIMARY KEY," +
+                    "userID VARCHAR(255)," +
+                    "titre VARCHAR(255)," +
+                    "description TEXT)";
             String insertSQL = "INSERT INTO threads (userID, titre, description) VALUES (?, ?, ?)";
-        
+
             try (Connection connection = DriverManager.getConnection(url, user, password);
-                 Statement statement = connection.createStatement();
-                 PreparedStatement insertStatement = connection.prepareStatement(insertSQL)) {
-                
+                    Statement statement = connection.createStatement();
+                    PreparedStatement insertStatement = connection.prepareStatement(insertSQL)) {
+
                 statement.executeUpdate(createTableSQL);
-                
+
                 insertStatement.setString(1, pseudo);
                 insertStatement.setString(2, titre);
                 insertStatement.setString(3, question);
                 insertStatement.executeUpdate();
                 System.out.println("Thread saved successfully.");
-                
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+            String createMessagesTableSQL = "CREATE TABLE IF NOT EXISTS messages (" +
+                    "id INT AUTO_INCREMENT PRIMARY KEY," +
+                    "threadID INT," +
+                    "userID VARCHAR(255)," +
+                    "message TEXT," +
+                    "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+                    "FOREIGN KEY (threadID) REFERENCES threads(id))";
+
+            try (Connection connection = DriverManager.getConnection(url, user, password);
+                    Statement statement = connection.createStatement()) {
+                statement.executeUpdate(createMessagesTableSQL);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
