@@ -10,7 +10,6 @@ public class ForumScreen4 extends JFrame {
     private JTextArea chatArea;
     private JTextField messageField;
     private String userID;
-
     public ForumScreen4(String userID, String selectedThreadInfo) {
         this.userID = userID;
         setTitle("Thread");
@@ -18,23 +17,24 @@ public class ForumScreen4 extends JFrame {
         setSize(600, 400);
         setLayout(new BorderLayout());
 
-        chatArea = new JTextArea();
+       chatArea = new JTextArea();
         chatArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(chatArea);
         add(scrollPane, BorderLayout.CENTER);
-
+        
         new JMenuBar();
         JButton createThreadButton = new JButton("Créer un fil");
         JButton joinThreadButton = new JButton("Rejoindre un fil");
         JButton refreshButton = new JButton("Re-lancer"); // Bouton de rafraîchissement
-
+   
+        
         JLabel label = new JLabel(selectedThreadInfo);
         add(label, BorderLayout.CENTER); // Utilisation du BorderLayout.CENTER pour afficher le texte au centre
 
         createThreadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Ouvrir la fenêtre pour créer un fil (ForumTemplate)
+                // Ouvrir la fenêtre pour créer un fil (ForumScreen2)
                 dispose();
                 new ForumTemplate(userID);
             }
@@ -61,11 +61,12 @@ public class ForumScreen4 extends JFrame {
         buttonPanel.add(createThreadButton);
         buttonPanel.add(joinThreadButton);
         buttonPanel.add(refreshButton); // Ajouter le bouton de rafraîchissement
-
         add(buttonPanel, BorderLayout.NORTH);
 
         JPanel messagePanel = new JPanel();
         messagePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0)); // Ajouter une marge supérieure de 20 pixels
+
+        add(buttonPanel, BorderLayout.NORTH);
 
         JLabel messageLabel = new JLabel("Enter Message: ");
         messageField = new JTextField(20);
@@ -81,7 +82,12 @@ public class ForumScreen4 extends JFrame {
         messagePanel.add(sendButton);
         messagePanel.add(resetButton);
 
+      
+       
+
+        add(scrollPane, BorderLayout.CENTER); // Déplacer le chatArea vers le centre
         add(messagePanel, BorderLayout.SOUTH);
+
         setVisible(true);
         setLocationRelativeTo(null);
     }
