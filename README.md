@@ -7,9 +7,9 @@ Back-end: Léo / Alexandre
 
 objectif:
 
--faire une interface graphique avec seulement java:
+-faire une interface graphique avec seulement java: V
 
--faire un forum en full java:
+-faire un forum en full java: V
 
 -système login/mot de passe: V
 
