@@ -76,6 +76,7 @@ public class ForumScreen4 extends JFrame {
         resetButton.addActionListener(new ResetButtonListener());
 
         messagePanel.add(messageLabel);
+        messagePanel.add(label);
         messagePanel.add(messageField);
         messagePanel.add(sendButton);
         messagePanel.add(resetButton);
